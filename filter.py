@@ -18,7 +18,7 @@ THRESHOLD = int(sys.argv[1])
 with open(statistic_file) as fin:
 	fin.readline()
 	for line in fin:
-		splitline = line.split(',')
+		splitline = line.strip().split(',')
 		uid = int(splitline[0])
 		postnum = int(splitline[1])
 		keywordsnum = int(splitline[2])
