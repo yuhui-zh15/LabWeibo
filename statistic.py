@@ -7,18 +7,19 @@
 import json
 import os
 import sys
+import time
 
 if len(sys.argv) != 2:
-	print 'Error!'
+	print('Argument Error!')
 	exit(-1)
 
-keywords = list()
+keywords = set()
 userdata = dict()
 with open('seedwords.txt') as fin:
 	line = fin.readline()
 	splitline = line.split(',')
 	for keyword in splitline:
-		keywords.append(keyword)
+		keywords.add(keyword)
 
 filelist = list()
 with open(sys.argv[1]) as fin:
@@ -29,16 +30,20 @@ dstpath = '/data/disk5/private/weibodata/'
 
 ferr = open('error_' + sys.argv[1] + '.txt', 'w')
 for filename in filelist:
+	print('Now time = ' + time.asctime())
 	print('Unzip ' + filename + '...')
 	os.system('lzop -d ' + srcpath + filename + ' -p' + dstpath)
 	unzipfilename = filename.split('.')[0]
 	with open(dstpath + unzipfilename) as fin:
 		print('Processing ' + unzipfilename + '...')
+		cnt = 0
 		for line in fin:
+			cnt += 1
+			if (cnt % 500000 == 0): print('Time = ' + time.asctime())
 			try:
 				jsonline = json.loads(line)
 				uid = jsonline['user_id']
-				text = jsonline['text'].encode('utf-8')
+				text = jsonline['text']
 				if uid not in userdata:
 					userdata[uid] = [0, 0]
 				keywordsnum = 0
