@@ -45,9 +45,7 @@ for filename in filelist:
 				userdata[uid][4] = name
 
 fout = open('statistics_details.csv', 'w')
-fout_leader = open('statistics_details_leader.csv', 'w')
 fout.write('uid,postnum,keywordsnum,ratio,followerscount,name\n')
-fout_leader.write('uid,postnum,keywordsnum,ratio,followerscount,name\n')
 for user in userdata.items():
 	uid = user[0]
 	postnum = user[1][0]
@@ -56,8 +54,5 @@ for user in userdata.items():
 	followerscount = user[1][3]
 	name = user[1][4]
 	fout.write(str(uid) + ',' + str(postnum) + ',' + str(keywordsnum) + ',' + str(ratio) + ',' + str(followerscount) + ',' + str(name) + '\n')
-	if (followerscount > 100000): 
-		fout_leader.write(str(uid) + ',' + str(postnum) + ',' + str(keywordsnum) + ',' + str(ratio) + ',' + str(followerscount) + ',' + str(name) + '\n')
 fout.close()
-fout_leader.close()
 		
